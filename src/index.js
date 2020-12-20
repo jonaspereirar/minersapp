@@ -1,16 +1,16 @@
-
 import React from 'react';
-import { StatusBar } from 'react-native';
-
-import './config/ReactotronConfig';
+import { View, StatusBar } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
 
 import Routes from './routes';
 
-export default function App() {
-  return (
-    <>
-      <StatusBar barStyle="light-content" backgroundColor="#7159c1" />
+const App = () => (
+  <NavigationContainer>
+    <StatusBar barStyle="light-content" backgroundColor="#FF4000" />
+    <View style={{ flex: 1, backgroundColor: '#FF4000' }}>
       <Routes />
-    </>
-  );
-}
+    </View>
+  </NavigationContainer>
+);
+
+export default App;
