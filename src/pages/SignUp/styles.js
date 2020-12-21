@@ -12,8 +12,7 @@ export const Container = styled.KeyboardAvoidingView.attrs({
   flex: 1;
   align-items: center;
   justify-content: center;
-  padding: 0 40px;
-  margin-top: 5px;
+  padding: 0 50px;
 `;
 export const Title = styled.Text`
   font-size: 18px;
@@ -35,7 +34,7 @@ export const SubmitButton = styled(Button)`
   margin-top: 5px;
 `;
 
-export const SignLink = styled.TouchableOpacity`
+export const BackToSignIn = styled.TouchableOpacity`
   position: absolute;
   left: 0;
   bottom: 0;
@@ -50,20 +49,9 @@ export const SignLink = styled.TouchableOpacity`
   flex-direction: row;
 `;
 
-export const SignLinkText = styled.Text`
+export const BackToSignInText = styled.Text`
   font-family: 'RobotoSlab-Medium';
   color: #f4ede8;
   font-weight: bold;
   font-size: 16px;
-`;
-
-export const ForgotPassword = styled.TouchableOpacity`
-  margin-top: 20px;
-`;
-
-export const ForgotPasswordText = styled.Text`
-  font-family: 'RobotoSlab-Regular';
-  color: #f4ede8;
-  font-weight: bold;
-  font-size: 14px;
 `;

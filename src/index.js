@@ -1,15 +1,16 @@
 import React from 'react';
-import { View, StatusBar } from 'react-native';
+import { StatusBar } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 
 import Routes from './routes';
+import Background from '~/components/Background';
 
 const App = () => (
   <NavigationContainer>
-    <StatusBar barStyle="light-content" backgroundColor="#FF4000" />
-    <View style={{ flex: 1, backgroundColor: '#FF4000' }}>
+    <Background>
+      <StatusBar barStyle="light-content" backgroundColor="#ff9000" />
       <Routes />
-    </View>
+    </Background>
   </NavigationContainer>
 );
 
