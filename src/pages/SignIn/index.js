@@ -38,7 +38,7 @@ const SignIn = ({ navigation }) => (
             keyboardType="numeric"
             autoCorrect={false}
             autoCapitalize="none"
-            placeholder="Digite seu nº de funcionário"
+            placeholder="Nº de Funcioário"
             returnKeyType="next"
           />
 

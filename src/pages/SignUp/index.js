@@ -35,7 +35,7 @@ const SignUp = ({ navigation }) => (
             icon="person"
             autoCorrect={false}
             autoCapitalize="none"
-            placeholder="Digite seu nome completo"
+            placeholder="Nome completo"
             returnKeyType="next"
           />
 
@@ -44,7 +44,7 @@ const SignUp = ({ navigation }) => (
             keyboardType="numeric"
             autoCorrect={false}
             autoCapitalize="none"
-            placeholder="Digite seu nº de funcionário"
+            placeholder="Nº de funcionário"
             returnKeyType="next"
           />
 
