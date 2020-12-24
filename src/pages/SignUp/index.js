@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { Image, View, ScrollView } from 'react-native';
+import { Image, View, ScrollView, Alert } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -34,7 +34,19 @@ const SignUp = ({ navigation }) => {
   const loading = useSelector(state => state.auth.loading);
 
   function handleSubmit() {
-    dispatch(signUpRequest(name, number, email, password));
+    try {
+      dispatch(signUpRequest(name, number, email, password));
+      Alert.alert(
+        'Cadastro Efetuado',
+        'Seu Cadastro foi efetuado com sucesso!',
+        [{ text: 'OK', onPress: () => navigation.replace('SignIn') }]
+      );
+    } catch (err) {
+      Alert.alert(
+        'Erro no cadastro',
+        'Ocorreu um erro ao fazer o cadastro, cheque seus dados'
+      );
+    }
   }
   return (
     <ScrollView
@@ -49,7 +61,7 @@ const SignUp = ({ navigation }) => {
             <Title>Faça seu Registo</Title>
           </View>
 
-          <Form>
+          <Form onSubmit={handleSubmit}>
             <FormInput
               icon="person"
               autoCorrect={false}
