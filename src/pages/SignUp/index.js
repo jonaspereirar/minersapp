@@ -34,19 +34,14 @@ const SignUp = ({ navigation }) => {
   const loading = useSelector(state => state.auth.loading);
 
   function handleSubmit() {
-    try {
-      dispatch(signUpRequest(name, number, email, password));
-      Alert.alert(
-        'Cadastro Efetuado',
-        'Seu Cadastro foi efetuado com sucesso!',
-        [{ text: 'OK', onPress: () => navigation.replace('SignIn') }]
-      );
-    } catch (err) {
-      Alert.alert(
-        'Erro no cadastro',
-        'Ocorreu um erro ao fazer o cadastro, cheque seus dados'
-      );
-    }
+    dispatch(signUpRequest(name, number, email, password));
+    Alert.alert('Cadastro Efetuado', 'Seu Cadastro foi efetuado com sucesso!', [
+      {
+        text: 'OK',
+        onPress: () => navigation.replace('SignIn'),
+        style: 'destructive',
+      },
+    ]);
   }
   return (
     <ScrollView
