@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 import {
   Container,
@@ -8,21 +8,45 @@ import {
   UserName,
   ProfileButton,
   UserAvatar,
+  DirectionButton,
+  DirectionAvatar,
+  DirectionTitle,
+  CheklistButton,
+  ChecklistAvatar,
+  ChecklistTitle,
+  LookButton,
+  LookAvatar,
+  LookTitle,
   LogoutButton,
 } from './styles';
 
 import { signOut } from '~/store/modules/auth/actions';
 
 import Background from '~/components/Background';
+import logoscheduler from '../../assets/calendar.png';
+import logochecklist from '../../assets/checklist.png';
+import logolook from '../../assets/look.png';
 
 export default function Dashboard() {
   const profile = useSelector(state => state.user.profile);
   const { navigate } = useNavigation();
+  const dispatch = useDispatch();
 
   const navigateToProfile = useCallback(() => {
-    navigate('Profile');
+    navigate(signOut());
   }, [navigate]);
-  const dispatch = useDispatch();
+
+  const navigateToDirections = useCallback(() => {
+    navigate('Directions');
+  }, [navigate]);
+
+  const navigateToChecklist = useCallback(() => {
+    navigate('Checklist');
+  }, [navigate]);
+
+  const navigateToLook = useCallback(() => {
+    navigate('Look');
+  }, [navigate]);
 
   function handleLogout() {
     dispatch(signOut());
@@ -34,7 +58,7 @@ export default function Dashboard() {
       <Background>
         <Header>
           <HeaderTitle>
-            Bem vindo, {'\n'}
+            Bem vindo, Welcome,{'\n'}
             <UserName>{profile.name}</UserName>
           </HeaderTitle>
 
@@ -43,7 +67,24 @@ export default function Dashboard() {
           </ProfileButton>
         </Header>
 
-        <LogoutButton onPress={handleLogout}>Sair do GoBarber</LogoutButton>
+        <DirectionButton onPress={navigateToDirections}>
+          <DirectionAvatar source={logoscheduler} />
+          <DirectionTitle>Plan an order:{'\n'}Agendar serviço.</DirectionTitle>
+        </DirectionButton>
+
+        <CheklistButton onPress={navigateToChecklist}>
+          <ChecklistAvatar source={logochecklist} />
+          <ChecklistTitle>
+            Checklists:{'\n'}Viaturas, Maquinas,{'\n'}Locais de Instalação.
+          </ChecklistTitle>
+        </CheklistButton>
+
+        <LookButton onPress={navigateToLook}>
+          <LookAvatar source={logolook} />
+          <LookTitle>Search:{'\n'}Pesquisar.</LookTitle>
+        </LookButton>
+
+        <LogoutButton onPress={handleLogout}>Sair</LogoutButton>
       </Background>
     </Container>
   );
