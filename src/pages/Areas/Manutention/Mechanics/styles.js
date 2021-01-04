@@ -31,11 +31,19 @@ export const UserName = styled.Text`
 
 export const ProfileButton = styled.TouchableOpacity``;
 
+export const TitleBack = styled.Text`
+  color: #f4ede8;
+  font-size: 20px;
+  font-family: 'RobotoSlab-Regular';
+  line-height: 28px;
+`;
+
 export const UserAvatar = styled.Image`
   padding: 24px;
   width: 80px;
   height: 80px;
   border-radius: 28px;
+  margin-left: auto;
 `;
 export const TitleDirectionList = styled.Text`
   color: #f4ede8;
@@ -46,7 +54,7 @@ export const TitleDirectionList = styled.Text`
   margin-top: 1px;
 `;
 
-export const DirectionContainer = styled(RectButton)`
+export const Provider = styled(RectButton)`
   background: transparent;
   border-radius: 10px;
   padding: 20px;
@@ -56,10 +64,12 @@ export const DirectionContainer = styled(RectButton)`
   align-items: center;
 `;
 
-export const DirectionAvatar = styled.Image`
-  width: 72px;
-  height: 72px;
-  border-radius: 36px;
+export const Avatar = styled.Image`
+  padding: 24px;
+  width: 80px;
+  height: 80px;
+  border-radius: 28px;
+  margin-left: auto;
 `;
 
 export const DirectionInfo = styled.View`
@@ -73,3 +83,11 @@ export const DirectionName = styled.Text`
   font-size: 18px;
   color: #f4ede8;
 `;
+
+export const Text = styled.Text`
+  font-family: 'RobotoSlab-Medium';
+  color: #505050;
+  font-size: 18px;
+`;
+
+export const BackButton = styled.TouchableOpacity``;

@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import { FlatList } from 'react-native';
 import {
@@ -15,6 +16,8 @@ import {
   DirectionAvatar,
   DirectionInfo,
   DirectionName,
+  BackButton,
+  TitleBack,
 } from './styles';
 
 import Background from '~/components/Background';
@@ -33,6 +36,12 @@ export default function Manutention() {
   const navigateToProfile = useCallback(() => {
     navigate(signOut());
   }, [navigate]);
+
+  const { goBack } = useNavigation();
+
+  const navigateBack = useCallback(() => {
+    goBack();
+  }, [goBack]);
 
   useEffect(() => {
     async function loadDirections() {
@@ -57,8 +66,6 @@ export default function Manutention() {
     }
   };
 
-  console.tron.log(areas);
-
   return (
     <Container>
       <Background>
@@ -66,7 +73,11 @@ export default function Manutention() {
           <HeaderTitle>
             <UserName>{profile.name}</UserName>
             {'\n'}
-            Selecione a area{'\n'}Select the order area
+            {'\n'}
+            <BackButton onPress={navigateBack}>
+              <Icon name="arrow-back" size={24} color="#f4ede8" />
+            </BackButton>
+            <TitleBack onPress={navigateBack}>Direção</TitleBack>
           </HeaderTitle>
 
           <ProfileButton onPress={navigateToProfile}>

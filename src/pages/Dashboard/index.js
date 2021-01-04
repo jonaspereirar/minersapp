@@ -51,7 +51,6 @@ export default function Dashboard() {
   function handleLogout() {
     dispatch(signOut());
   }
-  console.tron.log(profile);
 
   return (
     <Container>

@@ -20,6 +20,13 @@ export const Header = styled.View`
 export const HeaderTitle = styled.Text`
   color: #f4ede8;
   font-size: 20px;
+  font-family: 'RobotoSlab-Regula            <TitleDirectionList>Direction list</TitleDirectionList>r';
+  line-height: 28px;
+`;
+
+export const TitleBack = styled.Text`
+  color: #f4ede8;
+  font-size: 20px;
   font-family: 'RobotoSlab-Regular';
   line-height: 28px;
 `;
@@ -45,10 +52,6 @@ export const TitleDirectionList = styled.Text`
   align-self: center;
   margin-top: 1px;
 `;
-// export const List = styled.FlatList.attrs({
-//   contentContainerStyle: { padding: 30 },
-//   showsVerticalScrollIndicator: false,
-// })``;
 
 export const DirectionContainer = styled(RectButton)`
   background: transparent;
@@ -77,3 +80,5 @@ export const DirectionName = styled.Text`
   font-size: 18px;
   color: #f4ede8;
 `;
+
+export const BackButton = styled.TouchableOpacity``;

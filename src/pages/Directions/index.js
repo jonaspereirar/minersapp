@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import { FlatList } from 'react-native';
 import {
@@ -15,6 +16,8 @@ import {
   DirectionAvatar,
   DirectionInfo,
   DirectionName,
+  BackButton,
+  TitleBack,
 } from './styles';
 
 import Background from '~/components/Background';
@@ -29,6 +32,11 @@ export default function Directions() {
   const { navigate } = useNavigation();
 
   const [directions, setDirections] = useState([]);
+
+  const { goBack } = useNavigation();
+  const navigateBack = useCallback(() => {
+    goBack();
+  }, [goBack]);
 
   const navigateToProfile = useCallback(() => {
     navigate(signOut());
@@ -56,7 +64,6 @@ export default function Directions() {
       default:
     }
   };
-  console.tron.log(directions);
 
   return (
     <Container>
@@ -65,7 +72,11 @@ export default function Directions() {
           <HeaderTitle>
             <UserName>{profile.name}</UserName>
             {'\n'}
-            Selecione a direção{'\n'}Select order direction
+            {'\n'}
+            <BackButton onPress={navigateBack}>
+              <Icon name="arrow-back" size={24} color="#f4ede8" />
+            </BackButton>
+            <TitleBack onPress={navigateBack}>Início</TitleBack>
           </HeaderTitle>
 
           <ProfileButton onPress={navigateToProfile}>
