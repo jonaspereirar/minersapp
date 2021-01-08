@@ -3,6 +3,8 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 import Dashboard from '../pages/Dashboard';
 import CreateOrder from '../pages/CreateOrder';
+import Confirm from '../pages/CreateOrder/Confirm';
+
 import OrderCreated from '../pages/OrderCreated';
 import Profile from '../pages/Profile';
 
@@ -27,6 +29,8 @@ const AppRoute = () => (
   >
     <App.Screen name="Dashboard" component={Dashboard} />
     <App.Screen name="CreateOrder" component={CreateOrder} />
+    <App.Screen name="Confirm" component={Confirm} />
+
     <App.Screen name="OrderCreated" component={OrderCreated} />
 
     <App.Screen name="Profile" component={Profile} />
@@ -38,8 +42,8 @@ const AppRoute = () => (
     <App.Screen name="Production" component={Production} />
 
     <App.Screen name="Manutention" component={Manutention} />
-    <App.Screen name="Mechanics" component={Mechanics} />
-    <App.Screen name="Eletrics" component={Eletrics} />
+    <App.Screen name="1" component={Mechanics} />
+    <App.Screen name="2" component={Eletrics} />
   </App.Navigator>
 );
 

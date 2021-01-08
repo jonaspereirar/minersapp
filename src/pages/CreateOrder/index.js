@@ -34,7 +34,7 @@ import { signOut } from '~/store/modules/auth/actions';
 export default function CreatedOrder({ navigation, route }) {
   const { navigate } = useNavigation();
   const profile = useSelector(state => state.user.profile);
-  const { provider } = route.params;
+  const { provider, area } = route.params;
   const { goBack } = useNavigation();
 
   const [providers, setproviders] = useState([]);
@@ -52,31 +52,36 @@ export default function CreatedOrder({ navigation, route }) {
 
   useEffect(() => {
     async function loadAvailable() {
-      const response = await api.get(`providers/${provider.id}/available`, {
-        params: { date: date.getTime() },
-      });
+      const response = await api.get(
+        `providers/${selectedProvider}/available`,
+        {
+          params: { date: date.getTime() },
+        }
+      );
 
       setHours(response.data);
     }
 
     loadAvailable();
-  }, [date, provider.id]);
+  }, [date, selectedProvider]);
 
   useEffect(() => {
     async function loadProviders() {
-      const response = await api.get('providers/mechanics');
+      const response = await api.get(`area/${area}/providers`);
 
       setproviders(response.data);
     }
     loadProviders();
-  }, []);
+  }, [area, provider]);
 
   const handleSelectProvider = useCallback(id => {
     setSelectedProvider(id);
   }, []);
 
   function handleSelectHour(time) {
-    navigation.navigate('Confirm', { provider, time });
+    navigation.navigate('Confirm', { provider, time, area });
+
+    console.tron.log(provider);
   }
 
   return (
@@ -90,7 +95,9 @@ export default function CreatedOrder({ navigation, route }) {
             <BackButton onPress={navigateBack}>
               <Icon name="arrow-back" size={24} color="#f4ede8" />
             </BackButton>
-            <TitleBack onPress={navigateBack}>Supervisores</TitleBack>
+            <TitleBack onPress={navigateBack}>
+              Supervisor name: PropTypes.string, id: PropTypes.number,res
+            </TitleBack>
           </HeaderTitle>
 
           <ProfileButton onPress={navigateToProfile}>
@@ -149,6 +156,9 @@ export default function CreatedOrder({ navigation, route }) {
 CreatedOrder.propTypes = {
   route: PropTypes.shape({
     params: PropTypes.shape({
+      area: PropTypes.shape({
+        id: PropTypes.number,
+      }),
       provider: PropTypes.shape({
         id: PropTypes.number,
       }),

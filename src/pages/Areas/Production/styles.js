@@ -29,6 +29,13 @@ export const UserName = styled.Text`
   font-family: 'RobotoSlab-Medium';
 `;
 
+export const TitleBack = styled.Text`
+  color: #f4ede8;
+  font-size: 20px;
+  font-family: 'RobotoSlab-Regular';
+  line-height: 28px;
+`;
+
 export const ProfileButton = styled.TouchableOpacity``;
 
 export const UserAvatar = styled.Image`
@@ -73,3 +80,5 @@ export const DirectionName = styled.Text`
   font-size: 18px;
   color: #f4ede8;
 `;
+
+export const BackButton = styled.TouchableOpacity``;

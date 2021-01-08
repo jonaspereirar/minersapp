@@ -1,6 +1,8 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
+import PropTypes from 'prop-types';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import { FlatList } from 'react-native';
 import {
@@ -11,10 +13,12 @@ import {
   UserAvatar,
   ProfileButton,
   TitleDirectionList,
-  DirectionContainer,
-  DirectionAvatar,
+  Provider,
+  Avatar,
   DirectionInfo,
   DirectionName,
+  BackButton,
+  TitleBack,
 } from './styles';
 
 import Background from '~/components/Background';
@@ -24,38 +28,30 @@ import { signOut } from '~/store/modules/auth/actions';
 
 import api from '~/services/api';
 
-export default function Mechanics() {
-  const profile = useSelector(state => state.user.profile);
-  const { navigate } = useNavigation();
+export default function Eletrics({ route, navigation }) {
+  const { area } = route.params;
 
+  const profile = useSelector(state => state.user.profile);
   const [providers, setproviders] = useState([]);
+  const { navigate } = useNavigation();
 
   const navigateToProfile = useCallback(() => {
     navigate(signOut());
   }, [navigate]);
 
+  const { goBack } = useNavigation();
+  const navigateBack = useCallback(() => {
+    goBack();
+  }, [goBack]);
+
   useEffect(() => {
-    async function loadDirections() {
-      const response = await api.get('providers/eletrics');
+    async function loadProviders() {
+      const response = await api.get(`area/${area}/providers`);
 
       setproviders(response.data);
     }
-    loadDirections();
+    loadProviders();
   }, []);
-
-  const navigateToAreas = id => {
-    switch (id) {
-      case 1: {
-        navigate('');
-        break;
-      }
-      case 2: {
-        navigate('');
-        break;
-      }
-      default:
-    }
-  };
 
   return (
     <Container>
@@ -64,7 +60,11 @@ export default function Mechanics() {
           <HeaderTitle>
             <UserName>{profile.name}</UserName>
             {'\n'}
-            Selecione supervisor{'\n'}Select Area Supervisor
+            {'\n'}
+            <BackButton onPress={navigateBack}>
+              <Icon name="arrow-back" size={24} color="#f4ede8" />
+            </BackButton>
+            <TitleBack onPress={navigateBack}>Áreas</TitleBack>
           </HeaderTitle>
 
           <ProfileButton onPress={navigateToProfile}>
@@ -74,26 +74,41 @@ export default function Mechanics() {
 
         <FlatList
           data={providers}
-          keyExtractor={item => String(item.id)}
+          keyExtractor={provider => String(provider.id)}
           ListHeaderComponent={
             <TitleDirectionList>Supervisor list</TitleDirectionList>
           }
-          renderItem={({ item }) => (
-            <DirectionContainer onPress={() => navigateToAreas(item.id)}>
-              <DirectionAvatar
+          renderItem={({ item: provider }) => (
+            <Provider
+              onPress={() => navigation.navigate('CreateOrder', { provider })}
+            >
+              <Avatar
                 source={{
-                  uri: item.avatar
-                    ? item.avatar.url
+                  uri: provider.avatar
+                    ? provider.avatar.url
                     : 'https://cdn.pixabay.com/photo/2016/04/01/11/25/avatar-1300331_960_720.png',
                 }}
               />
               <DirectionInfo>
-                <DirectionName>{item.name}</DirectionName>
+                <DirectionName>{provider.name}</DirectionName>
               </DirectionInfo>
-            </DirectionContainer>
+            </Provider>
           )}
         />
       </Background>
     </Container>
   );
 }
+
+Eletrics.propTypes = {
+  route: PropTypes.shape({
+    params: PropTypes.shape({
+      area: PropTypes.shape({
+        id: PropTypes.number,
+      }),
+    }),
+  }).isRequired,
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func,
+  }).isRequired,
+};

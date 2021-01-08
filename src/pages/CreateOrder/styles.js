@@ -56,8 +56,8 @@ export const TitleAgendar = styled.Text`
 `;
 
 export const ProviderAvatar = styled.Image`
-  width: 32px;
-  height: 32px;
+  width: 40px;
+  height: 40px;
   border-radius: 16px;
 `;
 export const ProvidersListContainer = styled.View`

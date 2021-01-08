@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import PropTypes from 'prop-types';
 
 import { FlatList } from 'react-native';
 import {
@@ -27,7 +28,7 @@ import { signOut } from '~/store/modules/auth/actions';
 
 import api from '~/services/api';
 
-export default function Directions() {
+export default function Directions({ navigation }) {
   const profile = useSelector(state => state.user.profile);
   const { navigate } = useNavigation();
 
@@ -54,15 +55,16 @@ export default function Directions() {
   const navigateToAreas = id => {
     switch (id) {
       case 1: {
-        navigate('Production');
+        navigation.navigate('Production', { direction: id });
         break;
       }
       case 2: {
-        navigate('Manutention');
+        navigation.navigate('Manutention', { direction: id });
         break;
       }
       default:
     }
+    console.tron.log(id);
   };
 
   return (
@@ -91,7 +93,9 @@ export default function Directions() {
             <TitleDirectionList>Direction list</TitleDirectionList>
           }
           renderItem={({ item }) => (
-            <DirectionContainer onPress={() => navigateToAreas(item.id)}>
+            <DirectionContainer
+              onPress={() => navigateToAreas(item.id, { direction: item.id })}
+            >
               <DirectionAvatar
                 source={{
                   uri: item.avatar
@@ -109,3 +113,16 @@ export default function Directions() {
     </Container>
   );
 }
+
+Directions.propTypes = {
+  route: PropTypes.shape({
+    params: PropTypes.shape({
+      direction: PropTypes.shape({
+        id: PropTypes.number,
+      }),
+    }),
+  }).isRequired,
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func,
+  }).isRequired,
+};

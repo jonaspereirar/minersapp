@@ -28,10 +28,12 @@ import { signOut } from '~/store/modules/auth/actions';
 
 import api from '~/services/api';
 
-export default function Mechanics({ navigation }) {
-  const { navigate } = useNavigation();
+export default function Mechanics({ route, navigation }) {
+  const { area } = route.params;
+
   const profile = useSelector(state => state.user.profile);
   const [providers, setproviders] = useState([]);
+  const { navigate } = useNavigation();
 
   const navigateToProfile = useCallback(() => {
     navigate(signOut());
@@ -44,7 +46,7 @@ export default function Mechanics({ navigation }) {
 
   useEffect(() => {
     async function loadProviders() {
-      const response = await api.get('providers/mechanics');
+      const response = await api.get(`area/${area}/providers`);
 
       setproviders(response.data);
     }
@@ -78,7 +80,9 @@ export default function Mechanics({ navigation }) {
           }
           renderItem={({ item: provider }) => (
             <Provider
-              onPress={() => navigation.navigate('CreateOrder', { provider })}
+              onPress={() => {
+                navigation.navigate('CreateOrder', { provider, area });
+              }}
             >
               <Avatar
                 source={{
@@ -99,6 +103,13 @@ export default function Mechanics({ navigation }) {
 }
 
 Mechanics.propTypes = {
+  route: PropTypes.shape({
+    params: PropTypes.shape({
+      area: PropTypes.shape({
+        id: PropTypes.number,
+      }),
+    }),
+  }).isRequired,
   navigation: PropTypes.shape({
     navigate: PropTypes.func,
   }).isRequired,

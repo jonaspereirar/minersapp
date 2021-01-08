@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+import PropTypes from 'prop-types';
 import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
@@ -27,10 +28,14 @@ import { signOut } from '~/store/modules/auth/actions';
 
 import api from '~/services/api';
 
-export default function Manutention() {
+export default function Manutention({ route, navigation }) {
   const profile = useSelector(state => state.user.profile);
-  const { navigate } = useNavigation();
 
+  const { direction } = route.params;
+
+  const [selectedAreas, setselectedAreas] = useState([]);
+
+  const { navigate } = useNavigation();
   const [areas, setAreas] = useState([]);
 
   const navigateToProfile = useCallback(() => {
@@ -45,26 +50,21 @@ export default function Manutention() {
 
   useEffect(() => {
     async function loadDirections() {
-      const response = await api.get('areas/manutention');
+      const response = await api.get(`direction/${direction}/areas`);
 
       setAreas(response.data);
     }
     loadDirections();
-  }, []);
+  }, [selectedAreas, direction]);
 
-  const navigateToAreas = id => {
-    switch (id) {
-      case 1: {
-        navigate('Mechanics');
-        break;
-      }
-      case 2: {
-        navigate('Eletrics');
-        break;
-      }
-      default:
-    }
-  };
+  const handleSelectArea = useCallback(
+    id => {
+      setselectedAreas(id);
+      console.tron.log(id);
+      navigation.navigate(`${id}`, { area: id });
+    },
+    [navigation]
+  );
 
   return (
     <Container>
@@ -92,7 +92,9 @@ export default function Manutention() {
             <TitleDirectionList>Area list</TitleDirectionList>
           }
           renderItem={({ item }) => (
-            <DirectionContainer onPress={() => navigateToAreas(item.id)}>
+            <DirectionContainer
+              onPress={() => handleSelectArea(item.id, { area: item.id })}
+            >
               <DirectionAvatar
                 source={{
                   uri: item.avatar
@@ -110,3 +112,16 @@ export default function Manutention() {
     </Container>
   );
 }
+
+Manutention.propTypes = {
+  route: PropTypes.shape({
+    params: PropTypes.shape({
+      direction: PropTypes.shape({
+        id: PropTypes.number,
+      }),
+    }),
+  }).isRequired,
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func,
+  }).isRequired,
+};
