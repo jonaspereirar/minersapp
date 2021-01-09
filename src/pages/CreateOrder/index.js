@@ -95,9 +95,7 @@ export default function CreatedOrder({ navigation, route }) {
             <BackButton onPress={navigateBack}>
               <Icon name="arrow-back" size={24} color="#f4ede8" />
             </BackButton>
-            <TitleBack onPress={navigateBack}>
-              Supervisor name: PropTypes.string, id: PropTypes.number,res
-            </TitleBack>
+            <TitleBack onPress={navigateBack}>Áreas</TitleBack>
           </HeaderTitle>
 
           <ProfileButton onPress={navigateToProfile}>
@@ -142,7 +140,12 @@ export default function CreatedOrder({ navigation, route }) {
           renderItem={({ item }) => (
             <Hour
               enabled={item.available}
-              onPress={() => handleSelectHour(item.value)}
+              onPress={() => {
+                handleSelectHour(item.value, {
+                  area: area.id,
+                  provider: provider.id,
+                });
+              }}
             >
               <Title>{item.time}</Title>
             </Hour>

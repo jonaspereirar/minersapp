@@ -12,7 +12,10 @@ const DateInput = ({ date, onChange }) => {
   const [opened, setOpened] = useState(false);
 
   const dateFormatted = useMemo(
-    () => format(date, "dd 'de' MMMM 'de' yyyy", { locale: pt }),
+    () =>
+      format(date, "dd 'de' MMMM 'de' yyyy '", {
+        locale: pt,
+      }),
     [date]
   );
 

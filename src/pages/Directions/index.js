@@ -88,23 +88,25 @@ export default function Directions({ navigation }) {
 
         <FlatList
           data={directions}
-          keyExtractor={item => String(item.id)}
+          keyExtractor={direction => String(direction.id)}
           ListHeaderComponent={
             <TitleDirectionList>Direction list</TitleDirectionList>
           }
-          renderItem={({ item }) => (
+          renderItem={({ item: direction }) => (
             <DirectionContainer
-              onPress={() => navigateToAreas(item.id, { direction: item.id })}
+              onPress={() => {
+                navigateToAreas(direction.id, { direction: direction.id });
+              }}
             >
               <DirectionAvatar
                 source={{
-                  uri: item.avatar
-                    ? item.avatar.url
+                  uri: direction.avatar
+                    ? direction.avatar.url
                     : 'https://cdn.pixabay.com/photo/2016/04/01/11/25/avatar-1300331_960_720.png',
                 }}
               />
               <DirectionInfo>
-                <DirectionName>{item.name}</DirectionName>
+                <DirectionName>{direction.name}</DirectionName>
               </DirectionInfo>
             </DirectionContainer>
           )}

@@ -1,15 +1,35 @@
-import React, { useMemo } from 'react';
-import PropTypes from 'prop-types';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
+// import { TouchableOpacity } from 'react-native';
 import { formatRelative, parseISO } from 'date-fns';
 import pt from 'date-fns/locale/pt';
+import { useSelector } from 'react-redux';
+import PropTypes from 'prop-types';
 
+import { Form } from '@unform/mobile';
 import api from '~/services/api';
 
 import Background from '~/components/Background';
 
-import { Container, Avatar, Name, Time, SubmitButton } from './styles';
+import {
+  Container,
+  Avatar,
+  Name,
+  Time,
+  SubmitButton,
+  FormInput,
+} from './styles';
 
 const Confirm = ({ route, navigation }) => {
+  const descriptionRef = useRef();
+  const frenteRef = useRef();
+  const locationRef = useRef();
+
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
+  const [front, setFront] = useState('');
+  const [location, setLocation] = useState([]);
+
+  const profile = useSelector(state => state.user.profile);
   const { provider, time, area } = route.params;
 
   const dateFormatted = useMemo(
@@ -17,16 +37,30 @@ const Confirm = ({ route, navigation }) => {
     [time]
   );
 
-  console.tron.log({ provider });
+  useEffect(() => {
+    async function loadLocations() {
+      const response = await api.get('locations');
+
+      setLocation(response.data);
+    }
+    loadLocations();
+  }, []);
+
   async function handleAddAppointment() {
     await api.post('orders', {
-      provider_id: provider.id,
-      date: time,
+      title,
+      description,
+      location: location.id,
       area_id: area,
+      date: time,
+      provider_id: provider.id,
+      user_id: profile.id,
+      front,
     });
 
     navigation.reset({ index: 0, routes: [{ name: 'Dashboard' }] });
   }
+
   return (
     <Background>
       <Container>
@@ -37,12 +71,57 @@ const Confirm = ({ route, navigation }) => {
               : `https://ui-avatars.com/api/?name=${provider.name[0]}`,
           }}
         />
+        <Form>
+          <Name>{provider.name}</Name>
+          <Time>{dateFormatted}</Time>
+          <FormInput
+            icon="title"
+            autoCorrect={false}
+            autoCapitalize="none"
+            placeholder="Título"
+            returnKeyType="next"
+            onSubmitEditing={() => descriptionRef.current.focus()}
+            value={title}
+            onChangeText={setTitle}
+          />
 
-        <Name>{provider.name}</Name>
-        <Time>{dateFormatted}</Time>
+          <FormInput
+            icon="subtitles"
+            autoCorrect={false}
+            autoCapitalize="none"
+            placeholder="Descrição"
+            ref={descriptionRef}
+            returnKeyType="next"
+            onSubmitEditing={() => frenteRef.current.focus()}
+            value={description}
+            onChangeText={setDescription}
+          />
 
+          <FormInput
+            icon="my-location"
+            autoCorrect={false}
+            autoCapitalize="none"
+            placeholder="Frente de trabalho"
+            ref={frenteRef}
+            returnKeyType="next"
+            onSubmitEditing={() => locationRef.current.focus()}
+            value={front}
+            onChangeText={setFront}
+          />
+
+          <FormInput
+            icon="location-on"
+            autoCorrect={false}
+            autoCapitalize="none"
+            placeholder="Localização"
+            ref={locationRef}
+            returnKeyType="send"
+            value={location}
+            onChangeText={setLocation}
+          />
+        </Form>
         <SubmitButton onPress={handleAddAppointment}>
-          Confirmar agendamento
+          Confirmar pedido
         </SubmitButton>
       </Container>
     </Background>

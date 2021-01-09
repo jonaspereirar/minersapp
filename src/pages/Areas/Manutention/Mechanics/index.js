@@ -51,7 +51,7 @@ export default function Mechanics({ route, navigation }) {
       setproviders(response.data);
     }
     loadProviders();
-  }, []);
+  }, [area]);
 
   return (
     <Container>

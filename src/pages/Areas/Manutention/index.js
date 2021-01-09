@@ -87,23 +87,25 @@ export default function Manutention({ route, navigation }) {
 
         <FlatList
           data={areas}
-          keyExtractor={item => String(item.id)}
+          keyExtractor={area => String(area.id)}
           ListHeaderComponent={
             <TitleDirectionList>Area list</TitleDirectionList>
           }
-          renderItem={({ item }) => (
+          renderItem={({ item: area }) => (
             <DirectionContainer
-              onPress={() => handleSelectArea(item.id, { area: item.id })}
+              onPress={() => {
+                handleSelectArea(area.id, { area: area.id });
+              }}
             >
               <DirectionAvatar
                 source={{
-                  uri: item.avatar
-                    ? item.avatar.url
+                  uri: area.avatar
+                    ? area.avatar.url
                     : 'https://cdn.pixabay.com/photo/2016/04/01/11/25/avatar-1300331_960_720.png',
                 }}
               />
               <DirectionInfo>
-                <DirectionName>{item.name}</DirectionName>
+                <DirectionName>{area.name}</DirectionName>
               </DirectionInfo>
             </DirectionContainer>
           )}
@@ -117,6 +119,9 @@ Manutention.propTypes = {
   route: PropTypes.shape({
     params: PropTypes.shape({
       direction: PropTypes.shape({
+        id: PropTypes.number,
+      }),
+      area: PropTypes.shape({
         id: PropTypes.number,
       }),
     }),
