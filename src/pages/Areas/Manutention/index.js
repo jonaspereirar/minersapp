@@ -60,7 +60,6 @@ export default function Manutention({ route, navigation }) {
   const handleSelectArea = useCallback(
     id => {
       setselectedAreas(id);
-      console.tron.log(id);
       navigation.navigate(`${id}`, { area: id });
     },
     [navigation]

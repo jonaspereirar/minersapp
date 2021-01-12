@@ -80,8 +80,6 @@ export default function CreatedOrder({ navigation, route }) {
 
   function handleSelectHour(time) {
     navigation.navigate('Confirm', { provider, time, area });
-
-    console.tron.log(provider);
   }
 
   return (

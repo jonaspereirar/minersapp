@@ -47,3 +47,24 @@ export const Form = styled.View`
 export const FormInput = styled(Input)`
   margin-bottom: 10px;
 `;
+
+export const PickerButton = styled.TouchableOpacity`
+  padding: 0 16px;
+  height: 60px;
+  background: rgba(0, 0, 0, 0.1);
+  border: 2px solid #666360;
+  border-radius: 10px;
+  margin-bottom: 8px;
+  flex-direction: row;
+  align-items: center;
+`;
+
+export const PickerText = styled.Text`
+  flex: 1;
+  font-size: 16px;
+  margin-left: 10px;
+  color: #fff;
+  font-family: 'RobotoSlab-Regular';
+`;
+
+export const BackButton = styled.TouchableOpacity``;
